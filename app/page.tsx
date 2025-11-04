@@ -26,19 +26,6 @@ export default function Home() {
     );
   }
 
-  if (currentStep === 'form') {
-    return <StudentForm onContinue={() => setCurrentStep('verify')} />;
-  }
-
-    if (currentStep === 'verify') {
-    return <VerifyIdentity onContinue={() => setCurrentStep('submit')} />;
-  }
-
-  
-  if (currentStep === 'submit') {
-    return <SubmitForm />;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-6xl w-full">

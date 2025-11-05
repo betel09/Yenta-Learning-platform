@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -6,8 +5,8 @@ import { useRouter } from 'next/navigation';
 export default function LandingPage() {
   const router = useRouter();
 
-  const handleGetStarted = () => {
-    router.push('/');
+  const handleSignUp = () => {
+    router.push('/login');
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -62,14 +61,13 @@ export default function LandingPage() {
               </button>
             </div>
 
-            {/* Auth Buttons */}
-            <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-blue-600 font-medium">Login</button>
+            {/* Sign Up Button Only */}
+            <div className="flex items-center">
               <button 
-                onClick={handleGetStarted}
+                onClick={handleSignUp}
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium"
               >
-                Get Started
+                Sign Up
               </button>
             </div>
           </div>
@@ -92,16 +90,19 @@ export default function LandingPage() {
                 We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar - and help you worry a little less.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={handleGetStarted}
+         <button 
+                  onClick={handleSignUp}
                   className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-semibold text-lg"
                 >
                   Get Started
                 </button>
-                <button className="border border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg">
-                  Learn More
-                </button>
-              </div>
+         <button 
+            onClick={() => scrollToSection('about')}
+            className="border border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg"
+              >
+            Learn More
+            </button>
+            </div>
               <div className="mt-8 flex items-center gap-4">
                 <div className="bg-white rounded-lg px-6 py-3 shadow-sm">
                   <div className="text-2xl font-bold text-blue-600">2K+</div>
@@ -123,74 +124,168 @@ export default function LandingPage() {
         </div>
       </section>
 
+      
       {/* Introduction Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="text-sm text-blue-600 font-semibold mb-2">一一Let Us Introduce Our self</div>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Sparkle Tutoring Solution is where Experts Exist
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar - and help you worry a little less.
-            </p>
-          </div>
+      <section id="about" className="py-20 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <div className="text-sm text-blue-600 font-semibold mb-2">一一Let Us Introduce Our self</div>
+      <h2 className="text-4xl font-bold text-gray-800 mb-4">
+        Sparkle Tutoring Solution is where Experts Exist
+      </h2>
+    </div>
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <div className="text-white text-2xl">⭐</div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Certified Mentors</h3>
-                <p className="text-gray-600">
-                  We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar - and help you worry a little less.
-                </p>
-              </div>
-            ))}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      {/* Left Side - Introduction Text */}
+      <div>
+        <p className="text-lg text-gray-600 mb-6">
+          We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar - and help you worry a little less.
+        </p>
+        <p className="text-lg text-gray-600 mb-6">
+          At Sparkle Tutoring, we believe every student has unique potential waiting to be unlocked. Our dedicated team of certified educators is committed to providing personalized learning experiences that cater to individual needs and learning styles.
+        </p>
+        <p className="text-lg text-gray-600">
+          With years of experience in education and a passion for teaching, we've helped thousands of students achieve their academic goals and build lasting confidence in their abilities.
+        </p>
+      </div>
+
+      {/* Right Side - Certified Mentor Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {[
+          {
+            title: "Certified Educators",
+            description: "All our tutors are certified professionals with extensive teaching experience and subject matter expertise.",
+            icon: "🎓"
+          },
+          {
+            title: "Personalized Approach",
+            description: "We create customized learning plans tailored to each student's strengths, weaknesses, and learning style.",
+            icon: "✨"
+          },
+          {
+            title: "Proven Results",
+            description: "Our students consistently show significant improvement in grades, test scores, and academic confidence.",
+            icon: "📈"
+          },
+          {
+            title: "24/7 Support",
+            description: "Round-the-clock assistance ensures students get help whenever they need it, even outside scheduled sessions.",
+            icon: "🕒"
+          }
+        ].map((feature, index) => (
+          <div key={index} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 text-center">
+            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="text-white text-2xl">{feature.icon}</div>
+            </div>
+            <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
+            <p className="text-gray-600 text-sm">{feature.description}</p>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Be A Tutor Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div>
-              <h2 className="text-4xl font-bold text-white mb-6">
-                Turn Your Knowledge Into Impact (and Income!)
-              </h2>
-              <p className="text-lg text-blue-100 mb-8">
-                Are you a passionate tutor who loves helping students reach their goals? Join a community of skilled educators turning their expertise into meaningful side gigs.
-              </p>
-              <p className="text-lg text-blue-100 mb-8">
-                Connect, teach, and make a difference — all while earning from what you already know!
-              </p>
-              <button className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg">
-                Be A Tutor
-              </button>
-            </div>
-
-            {/* Right Content */}
-            <div className="grid grid-cols-2 gap-6">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-sm">
-                  <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-                    <div className="text-white">👨‍🏫</div>
-                  </div>
-                  <h4 className="text-white font-semibold mb-2">Certified Mentors</h4>
-                  <p className="text-blue-100 text-sm">
-                    We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar.
-                  </p>
-                </div>
-              ))}
-            </div>
+<section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      {/* Left Side - Image/Illustration */}
+      <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-4xl mb-4">👨‍🏫</div>
+            <div className="text-gray-600">Become a Tutor</div>
           </div>
         </div>
-      </section>
+      </div>
 
+      {/* Right Side - Text Content */}
+      <div>
+        <h2 className="text-4xl font-bold text-white mb-6">
+          Turn Your Knowledge Into Impact (and Income!)
+        </h2>
+        <p className="text-lg text-blue-100 mb-6">
+          Are you a passionate tutor who loves helping students reach their goals? Join a community of skilled educators turning their expertise into meaningful side gigs.
+        </p>
+        <p className="text-lg text-blue-100 mb-8">
+          Connect, teach, and make a difference — all while earning from what you already know!
+        </p>
+        <button className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg">
+          Be A Tutor
+        </button>
+      </div>
+    </div>
+
+    {/* Certified Mentor Cards Below */}
+    <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        {
+          title: "Flexible Schedule",
+          description: "Choose your own hours and teach when it's convenient for you.",
+          icon: "⏰"
+        },
+        {
+          title: "Competitive Earnings",
+          description: "Earn competitive rates while making a difference in students' lives.",
+          icon: "💰"
+        },
+        {
+          title: "Supportive Community",
+          description: "Join a network of passionate educators and share best practices.",
+          icon: "👥"
+        },
+        {
+          title: "Easy Setup",
+          description: "Get started quickly with our simple onboarding process.",
+          icon: "⚡"
+        }
+      ].map((feature, index) => (
+        <div key={index} className="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-sm">
+          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+            <div className="text-white text-xl">{feature.icon}</div>
+          </div>
+          <h4 className="text-white font-semibold mb-3">{feature.title}</h4>
+          <p className="text-blue-100 text-sm">
+            {feature.description}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    {/* Services Cards Below */}
+    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[
+        {
+          title: "One-on-One Tutoring",
+          description: "Personalized sessions with individual students",
+          icon: "👨‍🎓"
+        },
+        {
+          title: "Group Classes",
+          description: "Teach multiple students in interactive group sessions",
+          icon: "👥"
+        },
+        {
+          title: "Test Preparation",
+          description: "Help students prepare for important exams and tests",
+          icon: "📝"
+        }
+      ].map((service, index) => (
+        <div key={index} className="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-sm">
+          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+            <div className="text-white text-xl">{service.icon}</div>
+          </div>
+          <h4 className="text-white font-semibold mb-3">{service.title}</h4>
+          <p className="text-blue-100 text-sm">
+            {service.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
       {/* Tutors Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,14 +1,11 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
-import StudentForm from './Components/studentform';
-import VerifyIdentity from './Components/VerifyIdentity';
-import SubmitForm from './Components/SubmitForm';
+import StudentForm from '../Components/studentform';
+import VerifyIdentity from '../Components/VerifyIdentity';
+import SubmitForm from '../Components/SubmitForm';
 
-import { redirect } from 'next/navigation';
-
-export default function Home() {
-   redirect('/landing');
+export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [currentStep, setCurrentStep] = useState<'select' | 'form' | 'verify' | 'submit'>('select');
   const [isClient, setIsClient] = useState(false);
@@ -30,11 +27,10 @@ export default function Home() {
     return <StudentForm onContinue={() => setCurrentStep('verify')} />;
   }
 
-    if (currentStep === 'verify') {
+  if (currentStep === 'verify') {
     return <VerifyIdentity onContinue={() => setCurrentStep('submit')} />;
   }
 
-  
   if (currentStep === 'submit') {
     return <SubmitForm />;
   }

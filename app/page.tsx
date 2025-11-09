@@ -35,10 +35,14 @@ export default function Home() {
   }
 
   
-  if (currentStep === 'submit') {
-    return <SubmitForm />;
-  }
+  // if (currentStep === 'submit') {
+  //   return <SubmitForm />;
+  // }
 
+  if (currentStep === 'submit') {
+      return <SubmitForm selectedRole={selectedRole} />;
+    } 
+    
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-6xl w-full">

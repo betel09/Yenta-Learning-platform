@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -18,57 +19,24 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
+      {/* Navigation - same as before */}
       <nav className="bg-white shadow-sm border-b fixed w-full top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo */}
             <div className="flex items-center">
               <div className="text-2xl font-bold text-blue-600">SPARKLE</div>
             </div>
             
-            {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                Home
-              </button>
-              <button 
-                onClick={() => scrollToSection('about')}
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                About
-              </button>
-              <button 
-                onClick={() => scrollToSection('how-it-works')}
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                How it Works
-              </button>
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                Services
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                Contact Us
-              </button>
+              <button onClick={() => scrollToSection('home')} className="text-gray-700 hover:text-blue-600 font-medium">Home</button>
+              <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-blue-600 font-medium">About</button>
+              <button onClick={() => scrollToSection('how-it-works')} className="text-gray-700 hover:text-blue-600 font-medium">How it Works</button>
+              <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-blue-600 font-medium">Services</button>
+              <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-blue-600 font-medium">Contact Us</button>
             </div>
 
-            {/* Sign Up Button Only */}
             <div className="flex items-center">
-              <button 
-                onClick={handleSignUp}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium"
-              >
-                Sign Up
-              </button>
+              <button onClick={handleSignUp} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium">Sign Up</button>
             </div>
           </div>
         </div>
@@ -90,19 +58,9 @@ export default function LandingPage() {
                 We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar - and help you worry a little less.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-         <button 
-                  onClick={handleSignUp}
-                  className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-semibold text-lg"
-                >
-                  Get Started
-                </button>
-         <button 
-            onClick={() => scrollToSection('about')}
-            className="border border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg"
-              >
-            Learn More
-            </button>
-            </div>
+                <button onClick={handleSignUp} className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-semibold text-lg">Get Started</button>
+                <button onClick={() => scrollToSection('about')} className="border border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg">Learn More</button>
+              </div>
               <div className="mt-8 flex items-center gap-4">
                 <div className="bg-white rounded-lg px-6 py-3 shadow-sm">
                   <div className="text-2xl font-bold text-blue-600">2K+</div>
@@ -111,213 +69,133 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right Content - Placeholder for image */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">🎓</div>
-                  <div className="text-gray-600">Tutor Illustration</div>
-                </div>
-              </div>
-            </div>
+            {/* Right Content - Two Images with Connecting Arrows */}
+<div className="bg-white rounded-2xl shadow-lg p-8">
+  <div className="relative">
+    {/* Upper Arrow */}
+    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-10">
+      <Image 
+        src="/pic/arow-1.png" 
+        alt="Connecting arrow"
+        width={80}
+        height={40}
+        className="object-contain"
+      />
+    </div>
+
+    {/* Images Grid */}
+    <div className="grid grid-cols-2 gap-4 relative z-0">
+      {/* First Image */}
+      <div className="aspect-square rounded-lg overflow-hidden">
+        <Image 
+          src="/pic/Frame17.png" 
+          alt="Tutor helping student"
+          width={300}
+          height={300}
+          className="object-cover w-full h-full"
+        />
+      </div>
+      {/* Second Image */}
+      <div className="aspect-square rounded-lg overflow-hidden">
+        <Image 
+          src="/pic/Frame18.png" 
+          alt="Online tutoring session"
+          width={300}
+          height={300}
+          className="object-cover w-full h-full"
+        />
+      </div>
+    </div>
+
+    {/* Lower Arrow */}
+    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 z-10">
+      <Image 
+        src="/pic/arow-2.png" 
+        alt="Connecting arrow"
+        width={80}
+        height={40}
+        className="object-contain"
+      />
+    </div>
+  </div>
+</div>
           </div>
         </div>
       </section>
-
-      
-      {/* Introduction Section */}
-      <section id="about" className="py-20 bg-white">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-16">
-      <div className="text-sm text-blue-600 font-semibold mb-2">一一Let Us Introduce Our self</div>
-      <h2 className="text-4xl font-bold text-gray-800 mb-4">
-        Sparkle Tutoring Solution is where Experts Exist
-      </h2>
-    </div>
-
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-      {/* Left Side - Introduction Text */}
-      <div>
-        <p className="text-lg text-gray-600 mb-6">
-          We can't stop you worrying about your child. But our expert tutors can help their grades and confidence soar - and help you worry a little less.
-        </p>
-        <p className="text-lg text-gray-600 mb-6">
-          At Sparkle Tutoring, we believe every student has unique potential waiting to be unlocked. Our dedicated team of certified educators is committed to providing personalized learning experiences that cater to individual needs and learning styles.
-        </p>
-        <p className="text-lg text-gray-600">
-          With years of experience in education and a passion for teaching, we've helped thousands of students achieve their academic goals and build lasting confidence in their abilities.
-        </p>
+  {/* Navigation Bar Style Horizontal List */}
+<div className="bg-[#F9B236] w-full py-4">
+  <div className="flex flex-wrap justify-center gap-11 mx-auto max-w-6xl">
+    {['Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History'].map((subject, index) => (
+      <div key={index} className="text-black font-medium text-lg hover:text-white transition-colors cursor-default">
+        {subject}
       </div>
-
-      {/* Right Side - Certified Mentor Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {[
-          {
-            title: "Certified Educators",
-            description: "All our tutors are certified professionals with extensive teaching experience and subject matter expertise.",
-            icon: "🎓"
-          },
-          {
-            title: "Personalized Approach",
-            description: "We create customized learning plans tailored to each student's strengths, weaknesses, and learning style.",
-            icon: "✨"
-          },
-          {
-            title: "Proven Results",
-            description: "Our students consistently show significant improvement in grades, test scores, and academic confidence.",
-            icon: "📈"
-          },
-          {
-            title: "24/7 Support",
-            description: "Round-the-clock assistance ensures students get help whenever they need it, even outside scheduled sessions.",
-            icon: "🕒"
-          }
-        ].map((feature, index) => (
-          <div key={index} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 text-center">
-            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <div className="text-white text-2xl">{feature.icon}</div>
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
-            <p className="text-gray-600 text-sm">{feature.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    ))}
   </div>
-</section>
+</div>
 
       {/* Be A Tutor Section */}
-<section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      
-      {/* Left Side - Image/Illustration */}
-      <div className="bg-white rounded-2xl shadow-lg p-8">
-        <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-4xl mb-4">👨‍🏫</div>
-            <div className="text-gray-600">Become a Tutor</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side - Text Content */}
-      <div>
-        <h2 className="text-4xl font-bold text-white mb-6">
-          Turn Your Knowledge Into Impact (and Income!)
-        </h2>
-        <p className="text-lg text-blue-100 mb-6">
-          Are you a passionate tutor who loves helping students reach their goals? Join a community of skilled educators turning their expertise into meaningful side gigs.
-        </p>
-        <p className="text-lg text-blue-100 mb-8">
-          Connect, teach, and make a difference — all while earning from what you already know!
-        </p>
-        <button className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg">
-          Be A Tutor
-        </button>
-      </div>
-    </div>
-
-    {/* Certified Mentor Cards Below */}
-    <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {[
-        {
-          title: "Flexible Schedule",
-          description: "Choose your own hours and teach when it's convenient for you.",
-          icon: "⏰"
-        },
-        {
-          title: "Competitive Earnings",
-          description: "Earn competitive rates while making a difference in students' lives.",
-          icon: "💰"
-        },
-        {
-          title: "Supportive Community",
-          description: "Join a network of passionate educators and share best practices.",
-          icon: "👥"
-        },
-        {
-          title: "Easy Setup",
-          description: "Get started quickly with our simple onboarding process.",
-          icon: "⚡"
-        }
-      ].map((feature, index) => (
-        <div key={index} className="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-sm">
-          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-            <div className="text-white text-xl">{feature.icon}</div>
-          </div>
-          <h4 className="text-white font-semibold mb-3">{feature.title}</h4>
-          <p className="text-blue-100 text-sm">
-            {feature.description}
-          </p>
-        </div>
-      ))}
-    </div>
-
-    {/* Services Cards Below */}
-    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[
-        {
-          title: "One-on-One Tutoring",
-          description: "Personalized sessions with individual students",
-          icon: "👨‍🎓"
-        },
-        {
-          title: "Group Classes",
-          description: "Teach multiple students in interactive group sessions",
-          icon: "👥"
-        },
-        {
-          title: "Test Preparation",
-          description: "Help students prepare for important exams and tests",
-          icon: "📝"
-        }
-      ].map((service, index) => (
-        <div key={index} className="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-sm">
-          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-            <div className="text-white text-xl">{service.icon}</div>
-          </div>
-          <h4 className="text-white font-semibold mb-3">{service.title}</h4>
-          <p className="text-blue-100 text-sm">
-            {service.description}
-          </p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-      {/* Tutors Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="text-sm text-blue-600 font-semibold mb-2">一一Let Us Introduce Our self</div>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              More than thousand of tutors ready to give you the best education and help
-            </h2>
-          </div>
-
-          {/* Tutors Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={item} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 text-center">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <div className="text-white text-xl">👤</div>
-                </div>
-                <h4 className="font-semibold text-gray-800 mb-2">Biruktawit Selomon</h4>
-                <div className="text-sm text-gray-600">48 ⚡ Engineer @ 40+</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 font-semibold">
-                Browse More
-              </button>
-              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+     {/* Left Side - Two Images Overlapping */}
+   <div className="bg-white rounded-2xl shadow-lg p-8">
+   <div className="relative flex justify-center">
+    {/* First Image - Back */}
+    <div className="relative z-10 w-2/3 transform -rotate-3 shadow-xl">
+      <Image 
+        src="/pic/Frame19.png" 
+        alt="Tutor teaching"
+        width={300}
+        height={400}
+        className="object-cover w-full h-full rounded-xl"
+      />
+     </div>
+     {/* Second Image - Front */}
+     <div className="relative z-20 w-2/3 -ml-16 transform rotate-3 mt-8 shadow-2xl">
+       <Image 
+         src="/pic/Frame20.png"                
+         alt="Successful tutoring session"
+         width={300}
+         height={400}
+         className="object-cover w-full h-full rounded-xl"
+         />
+        </div>
+        </div>
+        </div> 
+            {/* Right Side - Text Content */}
+            <div>
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Turn Your Knowledge Into Impact (and Income!)
+              </h2>
+              <p className="text-lg text-blue-100 mb-6">
+                Are you a passionate tutor who loves helping students reach their goals? Join a community of skilled educators turning their expertise into meaningful side gigs.
+              </p>
+              <p className="text-lg text-blue-100 mb-8">
+                Connect, teach, and make a difference — all while earning from what you already know!
+              </p>
+              <button className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 font-semibold text-lg">
                 Be A Tutor
               </button>
             </div>
+          </div>
+
+          {/* Rest of the section remains the same */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "Flexible Schedule", description: "Choose your own hours and teach when it's convenient for you.", icon: "⏰" },
+              { title: "Competitive Earnings", description: "Earn competitive rates while making a difference in students' lives.", icon: "💰" },
+              { title: "Supportive Community", description: "Join a network of passionate educators and share best practices.", icon: "👥" },
+              { title: "Easy Setup", description: "Get started quickly with our simple onboarding process.", icon: "⚡" }
+            ].map((feature, index) => (
+              <div key={index} className="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-sm">
+                <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                  <div className="text-white text-xl">{feature.icon}</div>
+                </div>
+                <h4 className="text-white font-semibold mb-3">{feature.title}</h4>
+                <p className="text-blue-100 text-sm">{feature.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -342,45 +220,45 @@ export default function LandingPage() {
       </section>
 
       {/* About Section */}
-        <section id="about" className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <div className="text-sm text-blue-600 font-semibold mb-2">About Us</div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                Learn More About Sparkle Tutoring
-              </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                We are dedicated to providing the best online tutoring experience for students and creating opportunities for passionate educators.
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="text-sm text-blue-600 font-semibold mb-2">About Us</div>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Learn More About Sparkle Tutoring
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              We are dedicated to providing the best online tutoring experience for students and creating opportunities for passionate educators.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
+              <p className="text-gray-600 mb-6">
+                To connect students with expert tutors who can help them achieve academic success and build confidence in their learning journey.
+              </p>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
+              <p className="text-gray-600">
+                To become the leading online tutoring platform that transforms education through personalized learning experiences.
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
-                <p className="text-gray-600 mb-6">
-                  To connect students with expert tutors who can help them achieve academic success and build confidence in their learning journey.
-                </p>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
-                <p className="text-gray-600">
-                  To become the leading online tutoring platform that transforms education through personalized learning experiences.
-                </p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">🎯</div>
-                  <h4 className="text-xl font-bold text-gray-800 mb-4">Why Choose Us?</h4>
-                  <ul className="text-gray-600 space-y-2 text-left">
-                    <li>✅ Certified and experienced tutors</li>
-                    <li>✅ Personalized learning plans</li>
-                    <li>✅ Flexible scheduling</li>
-                    <li>✅ Affordable pricing</li>
-                    <li>✅ 24/7 support</li>
-                  </ul>
-                </div>
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+              <div className="text-center">
+                <div className="text-4xl mb-4">🎯</div>
+                <h4 className="text-xl font-bold text-gray-800 mb-4">Why Choose Us?</h4>
+                <ul className="text-gray-600 space-y-2 text-left">
+                  <li>✅ Certified and experienced tutors</li>
+                  <li>✅ Personalized learning plans</li>
+                  <li>✅ Flexible scheduling</li>
+                  <li>✅ Affordable pricing</li>
+                  <li>✅ 24/7 support</li>
+                </ul>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20 bg-gray-50">

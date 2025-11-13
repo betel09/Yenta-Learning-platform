@@ -140,56 +140,21 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right Content - Two Images with Connecting Arrows */}
-<div className="bg-white rounded-2xl shadow-lg p-8">
-  <div className="relative">
-    {/* Upper Arrow */}
-    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-10">
+            {/* Right Content - Single Combined Image */}
+<div className="bg-white rounded-3xl shadow-lg p-8">
+  <div className="flex justify-center items-center">
+    <div className="rounded-lg overflow-hidden">
       <Image 
-        src="/pic/arow-1.png" 
-        alt="Connecting arrow"
-        width={80}
-        height={40}
-        className="object-contain"
-      />
-    </div>
-
-    {/* Images Grid */}
-    <div className="grid grid-cols-2 gap-4 relative z-0">
-      {/* First Image */}
-      <div className="aspect-square rounded-lg overflow-hidden">
-        <Image 
-          src="/pic/Frame17.png" 
-          alt="Tutor helping student"
-          width={300}
-          height={300}
-          className="object-cover w-full h-full"
-        />
-      </div>
-      {/* Second Image */}
-      <div className="aspect-square rounded-lg overflow-hidden">
-        <Image 
-          src="/pic/Frame18.png" 
-          alt="Online tutoring session"
-          width={300}
-          height={300}
-          className="object-cover w-full h-full"
-        />
-      </div>
-    </div>
-
-    {/* Lower Arrow */}
-    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 z-10">
-      <Image 
-        src="/pic/arow-2.png" 
-        alt="Connecting arrow"
-        width={80}
-        height={40}
-        className="object-contain"
+        src="/pic/Picsart.png" 
+        alt="Tutoring session illustration"
+        width={600}
+        height={600}
+        className="object-contain w-full h-full max-h-96"
       />
     </div>
   </div>
 </div>
+
           </div>
         </div>
       </section>
@@ -833,28 +798,93 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-              <input type="text" placeholder="Doe" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+                <input 
+          type="text" 
+          placeholder="Doe" 
+          className="w-full px-1 py-3 border-0 border-b-2 border-gray-300 focus:border-blue-500 focus:ring-0 outline-none transition-colors bg-transparent" 
+        />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-              <input type="text" placeholder="Doe" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
+                <input 
+          type="text" 
+          placeholder="Doe" 
+          className="w-full px-1 py-3 border-0 border-b-2 border-gray-300 focus:border-blue-500 focus:ring-0 outline-none transition-colors bg-transparent" 
+        />
             </div>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Select Subject?</label>
-            <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none">
-              <option>General Inquiry</option>
-              <option>Technical Support</option>
-              <option>Billing Question</option>
-              <option>Partnership</option>
-            </select>
-          </div>
-
+          
+            {/* Email and Phone Row */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+    <input 
+      type="email" 
+      placeholder="Enter your email" 
+      className="w-full px-1 py-3 border-0 border-b-2 border-gray-300 focus:border-blue-500 focus:ring-0 outline-none transition-colors bg-transparent" 
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+    <input 
+      type="tel" 
+      placeholder="Enter your phone number" 
+      className="w-full px-1 py-3 border-0 border-b-2 border-gray-300 focus:border-blue-500 focus:ring-0 outline-none transition-colors bg-transparent" 
+    />
+  </div>
+</div>
+  <div>
+  <label className="block text-sm font-medium text-gray-700 mb-4">Select Subject?</label>
+  
+  {/* Horizontal Radio Buttons */}
+  <div className="flex flex-wrap gap-6">
+    <label className="flex items-center space-x-2">
+      <input 
+        type="radio" 
+        name="subject" 
+        value="general" 
+        className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+      />
+      <span className="text-gray-700">General Inquiry</span>
+    </label>
+    <label className="flex items-center space-x-2">
+      <input 
+        type="radio" 
+        name="subject" 
+        value="technical" 
+        className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+      />
+      <span className="text-gray-700">Technical Support</span>
+    </label>
+    <label className="flex items-center space-x-2">
+      <input 
+        type="radio" 
+        name="subject" 
+        value="billing" 
+        className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+      />
+      <span className="text-gray-700">Billing Question</span>
+    </label>
+    <label className="flex items-center space-x-2">
+      <input 
+        type="radio" 
+        name="subject" 
+        value="partnership" 
+        className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+      />
+      <span className="text-gray-700">Partnership</span>
+    </label>
+  </div>
+</div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-            <textarea rows={5} placeholder="Write your message.." className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"></textarea>
+            <textarea 
+  rows={1} 
+  placeholder="Write your message.." 
+  className="w-full px-1 py-3 border-0 border-b-2 border-gray-300 focus:border-blue-500 focus:ring-0 outline-none transition-colors bg-transparent resize-none"
+></textarea>
           </div>
+        
 
           <button type="submit" className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg">
             Send Message

@@ -3,24 +3,55 @@
 import { useState } from 'react';
 import { Search, MessageCircle, Bell, ChevronDown, Settings, Calendar, HelpCircle, MessageSquare, Users, LogOut, Clock, CheckCircle, DollarSign, BookOpen } from 'lucide-react';
 
+// Define types for our data
+interface Tutor {
+  name: string;
+  subject: string;
+  nextSession: string;
+}
+
+interface Class {
+  name: string;
+  tutor: string;
+  schedule: string;
+  status: string;
+}
+
+interface Booking {
+  id: number;
+  tutorName: string;
+  subject: string;
+  date: string;
+  time: string;
+  duration: string;
+  price: string;
+  tutorInitials: string;
+}
+
+interface UpcomingBookings {
+  awaitingConfirmation: Booking[];
+  awaitingPayment: Booking[];
+  confirmed: Booking[];
+}
+
 export default function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('home');
   const [showProfile, setShowProfile] = useState(false);
-  const [bookingView, setBookingView] = useState<string | null>(null); // 'upcoming' or 'previous' or null
+  const [bookingView, setBookingView] = useState<string | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
-  const tutors = [
+  const tutors: Tutor[] = [
     { name: 'Sarah Leah', subject: 'Mathematics', nextSession: 'Oct 15, 2:00pm' },
     { name: 'Sarah Leah', subject: 'Mathematics', nextSession: 'Oct 15, 2:00pm' },
   ];
 
-  const classes = [
+  const classes: Class[] = [
     { name: 'Physic 101', tutor: 'Sarah Lee', schedule: 'Mon, Wed, Fri -4:00pm', status: 'ongoing' },
     { name: 'Physic 101', tutor: 'Sarah Lee', schedule: 'Mon, Wed, Fri -4:00pm', status: 'ongoing' },
   ];
 
-  // Sample booking data
-  const upcomingBookings = {
+  // Sample booking data with proper typing
+  const upcomingBookings: UpcomingBookings = {
     awaitingConfirmation: [
       {
         id: 1,
@@ -37,7 +68,7 @@ export default function StudentDashboard() {
     confirmed: []
   };
 
-  const previousBookings = [];
+  const previousBookings: Booking[] = [];
 
   const toggleSection = (section: string) => {
     setSelectedSection(selectedSection === section ? null : section);
@@ -48,7 +79,7 @@ export default function StudentDashboard() {
     setSelectedSection(null);
   };
 
-  const BookingCard = ({ booking, status }: any) => (
+  const BookingCard = ({ booking, status }: { booking: Booking; status: string }) => (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4 hover:shadow-lg transition-shadow">
       <div className="flex items-center space-x-4">
         <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
@@ -174,7 +205,7 @@ export default function StudentDashboard() {
     title: string;
     icon: any;
     color: string;
-    bookings: any[];
+    bookings: Booking[];
   }) => (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <button

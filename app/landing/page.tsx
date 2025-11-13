@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Heading3 } from 'lucide-react';
+import { useState } from 'react';
 
 export default function LandingPage() {
   const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSignUp = () => {
     router.push('/login');
@@ -16,32 +17,101 @@ export default function LandingPage() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    setIsMenuOpen(false); // Close mobile menu after clicking
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation - same as before */}
+      {/* Navigation - Responsive */}
       <nav className="bg-white shadow-sm border-b fixed w-full top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
+            {/* Logo */}
             <div className="flex items-center">
               <div className="text-2xl font-bold text-blue-600">SPARKLE</div>
             </div>
             
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('home')} className="text-gray-700 hover:text-blue-600 font-medium">Home</button>
-              <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-blue-600 font-medium">About</button>
-              <button onClick={() => scrollToSection('how-it-works')} className="text-gray-700 hover:text-blue-600 font-medium">How it Works</button>
-              <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-blue-600 font-medium">Services</button>
-              <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-blue-600 font-medium">Contact Us</button>
+              <button onClick={() => scrollToSection('home')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">Home</button>
+              <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">About</button>
+              <button onClick={() => scrollToSection('how-it-works')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">How it Works</button>
+              <button onClick={() => scrollToSection('services')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">Services</button>
+              <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contact Us</button>
             </div>
 
-            <div className="flex items-center">
-              <button onClick={handleSignUp} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium">Sign Up</button>
+            {/* Desktop Sign Up Button */}
+            <div className="hidden md:flex items-center">
+              <button onClick={handleSignUp} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium transition-colors">
+                Sign Up
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center space-x-4">
+              <button onClick={handleSignUp} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium text-sm transition-colors">
+                Sign Up
+              </button>
+              <button
+                onClick={toggleMenu}
+                className="text-gray-700 hover:text-blue-600 focus:outline-none"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation Menu */}
+          <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+            isMenuOpen ? 'max-h-64 opacity-100 py-4' : 'max-h-0 opacity-0'
+          }`}>
+            <div className="flex flex-col space-y-4 px-2">
+              <button 
+                onClick={() => scrollToSection('home')}
+                className="text-gray-700 hover:text-blue-600 font-medium py-2 text-left transition-colors"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')}
+                className="text-gray-700 hover:text-blue-600 font-medium py-2 text-left transition-colors"
+              >
+                About
+              </button>
+              <button 
+                onClick={() => scrollToSection('how-it-works')}
+                className="text-gray-700 hover:text-blue-600 font-medium py-2 text-left transition-colors"
+              >
+                How it Works
+              </button>
+              <button 
+                onClick={() => scrollToSection('services')}
+                className="text-gray-700 hover:text-blue-600 font-medium py-2 text-left transition-colors"
+              >
+                Services
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')}
+                className="text-gray-700 hover:text-blue-600 font-medium py-2 text-left transition-colors"
+              >
+                Contact Us
+              </button>
             </div>
           </div>
         </div>
       </nav>
+
+   
 
       {/* Hero Section */}
       <section id="home" className="bg-gradient-to-r from-blue-50 to-indigo-100 py-20">

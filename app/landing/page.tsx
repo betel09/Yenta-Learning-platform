@@ -32,7 +32,7 @@ export default function LandingPage() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="text-2xl font-bold text-blue-600">SPARKLE</div>
+              <div className="text-2xl font-bold text-blue-600">YENETA</div>
             </div>
             
             {/* Desktop Navigation */}
@@ -178,7 +178,7 @@ export default function LandingPage() {
       <div className="space-y-6">
         <div className="text-sm text-blue-600 font-semibold mb-2">一一Let Us Introduce Our self</div>
         <h2 className="text-4xl font-bold text-gray-800 leading-tight">
-          Sparkle Tutoring<br />
+          YENETA Tutoring<br />
           Solution is where Experts Exist
         </h2>
         <p className="text-lg text-gray-600 leading-relaxed">
@@ -704,12 +704,7 @@ export default function LandingPage() {
         <h3 className="text-2xl font-bold mb-8 relative z-10">Contact Information</h3>
         
         <div className="space-y-6 relative z-10">
-          {/* Chat Prompt */}
-          <div className="mb-8 p-4 bg-blue-700 rounded-lg">
-            <p className="text-blue-100 text-lg font-medium text-center">
-              💬 Say something to start a live chat!
-            </p>
-          </div>
+          
 
           {/* Phone Numbers */}
           <div className="flex items-start gap-4">
@@ -885,10 +880,14 @@ export default function LandingPage() {
 ></textarea>
           </div>
         
-
-          <button type="submit" className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg">
-            Send Message
-          </button>
+  <div className="flex justify-end">
+      <button 
+        type="submit" 
+        className="bg-blue-600 text-white py-3 px-8 rounded-md font-semibold text-base hover:bg-blue-700 transition-colors shadow-lg"
+      >
+        Send Message
+      </button>
+    </div>
         </form>
       </div>
     </div>
@@ -900,7 +899,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
             <div>
-              <div className="text-2xl font-bold mb-4">SPARKLE</div>
+              <div className="text-2xl font-bold mb-4">YENTA</div>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Product</h4>

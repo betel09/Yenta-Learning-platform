@@ -7,7 +7,11 @@ import { Upload } from 'lucide-react';
 interface ParentFormProps {
   onContinue: () => void;
 }
-
+interface ParentFormProps {
+  onContinue: () => void;
+  onStepClick: (stepNumber: number) => void;
+  selectedRole: string;
+}
 export default function ParentForm({ onContinue }: ParentFormProps) {
   const [formData, setFormData] = useState({
     fullName: '',

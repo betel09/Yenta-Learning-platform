@@ -3,7 +3,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function SubmitForm({ selectedRole }: { selectedRole: string }) {
+interface SubmitFormProps {
+  selectedRole: string;
+  onStepClick?: (stepNumber: number) => void; // add this (remove ? to make required)
+}
+
+export default function SubmitForm({ 
+  selectedRole ,
+  onStepClick
+}: SubmitFormProps) {
   const [isClient, setIsClient] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);

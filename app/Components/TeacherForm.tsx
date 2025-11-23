@@ -6,7 +6,11 @@ import { useState } from 'react';
 interface TeacherFormProps {
   onContinue: () => void;
 }
-
+interface TeacherFormProps {
+  onContinue: () => void;
+  onStepClick: (stepNumber: number) => void;
+  selectedRole: string;
+}
 export default function TeacherForm({ onContinue }: TeacherFormProps) {
   const [formData, setFormData] = useState({
     fullName: '',

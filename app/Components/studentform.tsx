@@ -6,6 +6,7 @@ import { Upload, X } from 'lucide-react';
 interface StudentFormProps {
   onContinue: () => void;
   onStepClick: (stepNumber: number) => void;
+  selectedRole: string;
 }
 
 interface FileWithPreview {
@@ -13,7 +14,7 @@ interface FileWithPreview {
   preview: string;
 }
 
-export default function StudentForm({ onContinue, onStepClick }: StudentFormProps) {
+export default function StudentForm({ onContinue, onStepClick, selectedRole }: StudentFormProps) {
   const [formData, setFormData] = useState({
     studentName: '',
     studentGrade: '',
@@ -143,10 +144,6 @@ export default function StudentForm({ onContinue, onStepClick }: StudentFormProp
     }
   };
 
-  const handleStepClick = (stepNumber: number) => {
-    onStepClick?.(stepNumber);
-  };
-
   useEffect(() => {
     return () => {
       Object.values(files).forEach(file => {
@@ -156,6 +153,8 @@ export default function StudentForm({ onContinue, onStepClick }: StudentFormProp
       });
     };
   }, [files]);
+
+  const currentStepNumber = 2; // StudentForm is step 2
 
   if (!isClient) {
     return (
@@ -174,92 +173,128 @@ export default function StudentForm({ onContinue, onStepClick }: StudentFormProp
           
           {/* Mobile Steps - Compact */}
           <div className="sm:hidden w-full">
-            <div className="flex justify-between items-center w-full">
-              {[1, 2, 3, 4].map((stepNumber) => (
-                <div key={stepNumber} className="flex flex-col items-center">
-                  <div 
-                    onClick={() => handleStepClick(stepNumber)}
-                    className={`flex items-center justify-center w-8 h-8 rounded-full cursor-pointer transition-all ${
-                      stepNumber === 2 
-                        ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                        : 'bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200 hover:border-gray-400'
-                    }`}
-                  >
-                    {stepNumber}
+            <div className="flex justify-between items-center w-full px-4">
+              {[1, 2, 3, 4].map((stepNumber) => {
+                const isCurrent = stepNumber === currentStepNumber;
+                const isClickable = stepNumber <= currentStepNumber;
+                
+                return (
+                  <div key={stepNumber} className="flex flex-col items-center">
+                    <div 
+                      onClick={() => isClickable && onStepClick(stepNumber)}
+                      className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${
+                        isCurrent
+                          ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer' 
+                          : stepNumber < currentStepNumber
+                          ? 'bg-green-500 text-white hover:bg-green-600 cursor-pointer'
+                          : 'bg-gray-100 text-gray-400 border border-gray-300 cursor-not-allowed'
+                      }`}
+                    >
+                      {stepNumber < currentStepNumber ? '✓' : stepNumber}
+                    </div>
+                    {isCurrent && (
+                      <span className="text-xs text-blue-600 font-medium mt-1">Details</span>
+                    )}
                   </div>
-                  {stepNumber === 2 && (
-                    <span className="text-xs text-blue-600 font-medium mt-1">Details</span>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
             
             {/* Mobile Step Titles */}
-            <div className="grid grid-cols-4 gap-1 mt-2 text-center">
-              {['Choose', 'Details', 'Verify', 'Submit'].map((title, index) => (
-                <div 
-                  key={index} 
-                  className={`text-xs ${
-                    index === 1 ? 'text-blue-600 font-medium' : 'text-gray-500'
-                  } truncate`}
-                >
-                  {title}
-                </div>
-              ))}
+            <div className="grid grid-cols-4 gap-1 mt-2 text-center px-2">
+              {['Choose', 'Details', 'Verify', 'Submit'].map((title, index) => {
+                const stepNumber = index + 1;
+                const isCurrent = stepNumber === currentStepNumber;
+                const isClickable = stepNumber <= currentStepNumber;
+                
+                return (
+                  <div 
+                    key={index} 
+                    onClick={() => isClickable && onStepClick(stepNumber)}
+                    className={`text-xs truncate ${
+                      isCurrent 
+                        ? 'text-blue-600 font-medium cursor-pointer' 
+                        : stepNumber < currentStepNumber
+                        ? 'text-green-600 font-medium cursor-pointer hover:text-green-700'
+                        : 'text-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    {title}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
           {/* Desktop Steps */}
           <div className="hidden sm:flex items-center space-x-2 lg:space-x-4 xl:space-x-6">
             {[
-              { number: 1, title: 'Choose account type', current: false },
-              { number: 2, title: 'Fill out details', current: true },
-              { number: 3, title: 'Verify identity', current: false },
-              { number: 4, title: 'Submit', current: false }
-            ].map((step, index) => (
-              <div key={step.number} className="flex items-center">
-                <div 
-                  onClick={() => handleStepClick(step.number)}
-                  className={`flex items-center justify-center w-8 h-8 rounded-full cursor-pointer transition-all ${
-                    step.current 
-                      ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                      : 'bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200 hover:border-gray-400'
-                  }`}
-                >
-                  {step.number}
+              { number: 1, title: 'Choose account type' },
+              { number: 2, title: 'Fill out details' },
+              { number: 3, title: 'Verify identity' },
+              { number: 4, title: 'Submit' }
+            ].map((step, index) => {
+              const isCurrent = step.number === currentStepNumber;
+              const isClickable = step.number <= currentStepNumber;
+              const isCompleted = step.number < currentStepNumber;
+              
+              return (
+                <div key={step.number} className="flex items-center">
+                  <div 
+                    onClick={() => isClickable && onStepClick(step.number)}
+                    className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${
+                      isCurrent
+                        ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer' 
+                        : isCompleted
+                        ? 'bg-green-500 text-white hover:bg-green-600 cursor-pointer'
+                        : isClickable
+                        ? 'bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200 hover:border-gray-400 cursor-pointer'
+                        : 'bg-gray-100 text-gray-400 border border-gray-300 cursor-not-allowed'
+                    }`}
+                  >
+                    {isCompleted ? '✓' : step.number}
+                  </div>
+                  <span 
+                    onClick={() => isClickable && onStepClick(step.number)}
+                    className={`ml-2 text-sm transition-colors ${
+                      isCurrent 
+                        ? 'text-blue-600 font-medium hover:text-blue-700 cursor-pointer' 
+                        : isCompleted
+                        ? 'text-green-600 font-medium hover:text-green-700 cursor-pointer'
+                        : isClickable
+                        ? 'text-gray-600 hover:text-gray-800 cursor-pointer'
+                        : 'text-gray-400 cursor-not-allowed'
+                    } hidden lg:inline`}
+                  >
+                    {step.title}
+                  </span>
+                  <span 
+                    onClick={() => isClickable && onStepClick(step.number)}
+                    className={`ml-2 text-sm transition-colors ${
+                      isCurrent 
+                        ? 'text-blue-600 font-medium hover:text-blue-700 cursor-pointer' 
+                        : isCompleted
+                        ? 'text-green-600 font-medium hover:text-green-700 cursor-pointer'
+                        : isClickable
+                        ? 'text-gray-600 hover:text-gray-800 cursor-pointer'
+                        : 'text-gray-400 cursor-not-allowed'
+                    } lg:hidden`}
+                  >
+                    {step.number === 1 ? 'Choose' : 
+                     step.number === 2 ? 'Details' : 
+                     step.number === 3 ? 'Verify' : 'Submit'}
+                  </span>
+                  {index < 3 && <div className="ml-2 lg:ml-4 w-4 lg:w-6 h-0.5 bg-gray-300"></div>}
                 </div>
-                <span 
-                  onClick={() => handleStepClick(step.number)}
-                  className={`ml-2 text-sm cursor-pointer transition-colors ${
-                    step.current 
-                      ? 'text-blue-600 font-medium hover:text-blue-700' 
-                      : 'text-gray-600 hover:text-gray-800'
-                  } hidden lg:inline`}
-                >
-                  {step.title}
-                </span>
-                <span 
-                  onClick={() => handleStepClick(step.number)}
-                  className={`ml-2 text-sm cursor-pointer transition-colors ${
-                    step.current 
-                      ? 'text-blue-600 font-medium hover:text-blue-700' 
-                      : 'text-gray-600 hover:text-gray-800'
-                  } lg:hidden`}
-                >
-                  {step.number === 1 ? 'Choose' : 
-                   step.number === 2 ? 'Details' : 
-                   step.number === 3 ? 'Verify' : 'Submit'}
-                </span>
-                {index < 3 && <div className="ml-2 lg:ml-4 w-4 lg:w-6 h-0.5 bg-gray-300"></div>}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
         {/* Alternative Mobile Progress Bar */}
         <div className="sm:hidden bg-gray-50 rounded-lg p-3 mb-6">
           <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-600">Step 2 of 4</span>
+            <span className="text-gray-600">Step {currentStepNumber} of 4</span>
             <span className="text-blue-600 font-medium">Fill Details</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2 mt-2">

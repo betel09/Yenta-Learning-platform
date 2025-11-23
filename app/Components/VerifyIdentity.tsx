@@ -2,7 +2,19 @@
 
 import { useState, useEffect } from 'react';
 
-export default function VerifyIdentity({ onContinue }: { onContinue: () => void }) {
+interface VerifyIdentityProps {
+  onContinue: () => void;
+  onStepClick: (stepNumber: number) => void;
+  selectedRole: string;
+}
+
+export default function VerifyIdentity({ 
+  onContinue,
+  onStepClick,
+  selectedRole
+
+ }:
+  VerifyIdentityProps) {
   const [isClient, setIsClient] = useState(false);
   const [currentStep, setCurrentStep] = useState<'fan' | 'email-phone' | 'otp' | 'success'>('fan');
   const [fanNumber, setFanNumber] = useState('');

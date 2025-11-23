@@ -940,7 +940,7 @@ export default function LandingPage() {
           </div>
           
           <div className="border-t border-gray-700 pt-8 text-center text-gray-300">
-            <p>© 2024 SPARKLE. All rights reserved.</p>
+            <p>© 2024 YENETA. All rights reserved.</p>
           </div>
         </div>
       </footer>

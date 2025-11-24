@@ -14,7 +14,10 @@ interface FileWithPreview {
   preview: string;
 }
 
-export default function StudentForm({ onContinue, onStepClick, selectedRole }: StudentFormProps) {
+export default function StudentForm({ onContinue, 
+  onStepClick, 
+  selectedRole }: 
+  StudentFormProps) {
   const [formData, setFormData] = useState({
     studentName: '',
     studentGrade: '',

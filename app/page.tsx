@@ -17,6 +17,30 @@ export default function Home() {
     setIsClient(true);
   }, []);
 
+
+  // Add this function for step navigation
+const handleStepClick = (stepNumber: number) => {
+  switch (stepNumber) {
+    case 1:
+      setCurrentStep('select');
+      break;
+    case 2:
+      if (selectedRole) {
+        setCurrentStep('form');
+      }
+      break;
+    case 3:
+      if (selectedRole) {
+        setCurrentStep('verify');
+      }
+      break;
+    case 4:
+      if (selectedRole) {
+        setCurrentStep('submit');
+      }
+      break;
+  }
+};
   // Show loading state during SSR to prevent hydration mismatch
   if (!isClient) {
     return (
@@ -27,22 +51,29 @@ export default function Home() {
   }
 
   if (currentStep === 'form') {
-    return <StudentForm onContinue={() => setCurrentStep('verify')} />;
-  }
+  return (
+    <StudentForm 
+      onContinue={() => setCurrentStep('verify')} 
+      onStepClick={handleStepClick}
+      selectedRole={selectedRole}
+    />
+  );
+}
+if (currentStep === 'verify') {
+  return (
+    <VerifyIdentity 
+      onContinue={() => setCurrentStep('submit')} 
+      onStepClick={handleStepClick}
+      selectedRole={selectedRole}
+    />
+  );
+}
 
-    if (currentStep === 'verify') {
-    return <VerifyIdentity onContinue={() => setCurrentStep('submit')} />;
-  }
-
-  
-  // if (currentStep === 'submit') {
-  //   return <SubmitForm />;
-  // }
 
   if (currentStep === 'submit') {
       return <SubmitForm selectedRole={selectedRole} />;
     } 
-    
+     
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-6xl w-full">

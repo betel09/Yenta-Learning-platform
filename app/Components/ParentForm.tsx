@@ -12,7 +12,7 @@ interface ParentFormProps {
   onStepClick: (stepNumber: number) => void;
   selectedRole: string;
 }
-export default function ParentForm({ onContinue }: ParentFormProps) {
+export default function ParentForm({ onContinue , onStepClick, selectedRole }: ParentFormProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     gender: 'male',

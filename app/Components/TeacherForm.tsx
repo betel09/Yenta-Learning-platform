@@ -11,7 +11,7 @@ interface TeacherFormProps {
   onStepClick: (stepNumber: number) => void;
   selectedRole: string;
 }
-export default function TeacherForm({ onContinue }: TeacherFormProps) {
+export default function TeacherForm({ onContinue, onStepClick, selectedRole }: TeacherFormProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     gender: 'Male',

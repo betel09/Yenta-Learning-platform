@@ -1,46 +1,43 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import StudentForm from '../Components/studentform';
-import TeacherForm from '../Components/TeacherForm';
-import ParentForm from '../Components/ParentForm';
-import VerifyIdentity from '../Components/VerifyIdentity';
-import SubmitForm from '../Components/SubmitForm';
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<string>('');
-  const [currentStep, setCurrentStep] = useState<'select' | 'form' | 'verify' | 'submit'>('select');
+  const [showPassword, setShowPassword] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rememberMe: false,
+  });
+
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Add this function for step navigation
-  const handleStepClick = (stepNumber: number) => {
-    switch (stepNumber) {
-      case 1:
-        setCurrentStep('select');
-        break;
-      case 2:
-        if (selectedRole) {
-          setCurrentStep('form');
-        }
-        break;
-      case 3:
-        if (selectedRole) {
-          setCurrentStep('verify');
-        }
-        break;
-      case 4:
-        if (selectedRole) {
-          setCurrentStep('submit');
-        }
-        break;
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle login logic here
+    console.log('Login attempt:', { ...formData, role: selectedRole });
   };
 
-  // Prevent hydration mismatch
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleCreateAccount = () => {
+    router.push('/register');
+  };
+
   if (!isClient) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -49,283 +46,227 @@ export default function LoginPage() {
     );
   }
 
-  // === STEP: FORM ===
-  if (currentStep === 'form') {
-    if (selectedRole === 'student') {
-      return (
-        <StudentForm 
-          onContinue={() => setCurrentStep('verify')} 
-          onStepClick={handleStepClick}
-          selectedRole={selectedRole}
-        />
-      );
-    }
-    if (selectedRole === 'teacher') {
-      return (
-        <TeacherForm 
-          onContinue={() => setCurrentStep('verify')} 
-          onStepClick={handleStepClick}
-          selectedRole={selectedRole}
-        />
-      );
-    }
-    if (selectedRole === 'parent') {
-      return (
-        <ParentForm 
-          onContinue={() => setCurrentStep('verify')} 
-          onStepClick={handleStepClick}
-          selectedRole={selectedRole}
-        />
-      );
-    }
-    // Fallback
-    return (
-      <StudentForm 
-        onContinue={() => setCurrentStep('verify')} 
-        onStepClick={handleStepClick}
-        selectedRole={selectedRole}
-      />
-    );
-  }
-
-  // === STEP: VERIFY ===
-  if (currentStep === 'verify') {
-    return (
-      <VerifyIdentity 
-        onContinue={() => setCurrentStep('submit')} 
-        onStepClick={handleStepClick}
-        selectedRole={selectedRole}
-      />
-    );
-  }
-
-  // === STEP: SUBMIT ===
-  if (currentStep === 'submit') {
-    return (
-      <SubmitForm 
-        selectedRole={selectedRole} 
-        onStepClick={handleStepClick}
-      />
-    );
-  }
-
-  // === STEP: SELECT ROLE ===
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-3 sm:p-4 lg:p-6">
-      <div className="max-w-6xl w-full mx-auto">
-        {/* Step Navigation - Mobile Responsive */}
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 sm:mb-12 lg:mb-16 space-y-4 sm:space-y-0">
-          <div className="text-yellow-500 text-2xl sm:text-3xl">⭐</div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="text-yellow-500 text-4xl mb-4">⭐</div>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome Back!</h1>
+          <p className="text-gray-600 text-lg">Sign in to your account to continue</p>
+        </div>
+
+        {/* Role Selection - Always Visible */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+            Select Your Role
+          </h2>
           
-          {/* Mobile Steps - Compact */}
-          <div className="sm:hidden w-full">
-            <div className="flex justify-between items-center w-full px-4">
-              {[1, 2, 3, 4].map((stepNumber) => (
-                <div key={stepNumber} className="flex flex-col items-center">
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                    stepNumber === 1 ? 'bg-blue-600 text-white' : 'bg-white text-gray-400 border-2 border-gray-300'
-                  }`}>
-                    <span className="font-semibold text-sm">{stepNumber}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Student Card */}
+            <div 
+              className={`bg-white rounded-2xl shadow-lg p-6 border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
+                selectedRole === 'student' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+              }`}
+              onClick={() => setSelectedRole('student')}
+            >
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Student</h3>
+              <ul className="text-gray-600 space-y-2">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Access your courses
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Join live classes
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Track your progress
+                </li>
+              </ul>
+              {selectedRole === 'student' && (
+                <div className="mt-4 p-2 bg-blue-100 rounded-lg text-center">
+                  <span className="text-blue-700 text-sm font-medium">✓ Selected</span>
+                </div>
+              )}
+            </div>
+
+            {/* Parent Card */}
+            <div 
+              className={`bg-white rounded-2xl shadow-lg p-6 border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
+                selectedRole === 'parent' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+              }`}
+              onClick={() => setSelectedRole('parent')}
+            >
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Parent</h3>
+              <ul className="text-gray-600 space-y-2">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Monitor child's progress
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Communicate with tutors
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  View reports
+                </li>
+              </ul>
+              {selectedRole === 'parent' && (
+                <div className="mt-4 p-2 bg-blue-100 rounded-lg text-center">
+                  <span className="text-blue-700 text-sm font-medium">✓ Selected</span>
+                </div>
+              )}
+            </div>
+
+            {/* Teacher Card */}
+            <div 
+              className={`bg-white rounded-2xl shadow-lg p-6 border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
+                selectedRole === 'teacher' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-400'
+              }`}
+              onClick={() => setSelectedRole('teacher')}
+            >
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Teacher</h3>
+              <ul className="text-gray-600 space-y-2">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Manage your classes
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Track student progress
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">•</span>
+                  Schedule sessions
+                </li>
+              </ul>
+              {selectedRole === 'teacher' && (
+                <div className="mt-4 p-2 bg-blue-100 rounded-lg text-center">
+                  <span className="text-blue-700 text-sm font-medium">✓ Selected</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Login Form - Only shows when role is selected */}
+        {selectedRole && (
+          <div className="max-w-md mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                  <span>Selected:</span>
+                  <span className="font-semibold capitalize">{selectedRole}</span>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  Sign In as {selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)}
+                </h2>
+                <p className="text-gray-600">
+                  Enter your credentials to access your account
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Email Input */}
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Email Address *
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter your email"
+                      required
+                    />
                   </div>
-                  {stepNumber === 1 && (
-                    <span className="text-xs text-blue-600 font-medium mt-1">Choose</span>
-                  )}
                 </div>
-              ))}
-            </div>
-            
-            {/* Mobile Step Titles */}
-            <div className="grid grid-cols-4 gap-1 mt-2 text-center px-2">
-              {['Choose', 'Details', 'Verify', 'Submit'].map((title, index) => (
-                <div 
-                  key={index} 
-                  className={`text-xs ${
-                    index === 0 ? 'text-blue-600 font-medium' : 'text-gray-500'
-                  } truncate`}
+
+                {/* Password Input */}
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Password *
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter your password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Remember Me & Forgot Password */}
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="rememberMe"
+                      checked={formData.rememberMe}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 focus:ring-blue-500 rounded"
+                    />
+                    <span className="text-gray-700">Remember me</span>
+                  </label>
+                  <a href="#" className="text-blue-600 hover:text-blue-700 transition-colors">
+                    Forgot password?
+                  </a>
+                </div>
+
+                {/* Sign In Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105"
                 >
-                  {title}
+                  Sign In
+                </button>
+
+                {/* Create New Account Link */}
+                <div className="text-center pt-4 border-t border-gray-200">
+                  <p className="text-gray-600">
+                    Don't have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={handleCreateAccount}
+                      className="text-blue-600 hover:text-blue-700 font-semibold transition-colors underline"
+                    >
+                      Create new one
+                    </button>
+                  </p>
                 </div>
-              ))}
+              </form>
             </div>
           </div>
+        )}
 
-          {/* Desktop Steps */}
-          <div className="hidden sm:flex items-center space-x-4 lg:space-x-8">
-            {[
-              { number: 1, title: 'Choose account type', current: true },
-              { number: 2, title: 'Fill out necessary detail', current: false },
-              { number: 3, title: 'Verify identity', current: false },
-              { number: 4, title: 'Submit', current: false }
-            ].map((step) => (
-              <div key={step.number} className="flex items-center">
-                <div className={`flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-full ${
-                  step.current ? 'bg-blue-600 text-white border-2 border-blue-600' : 'bg-white text-gray-400 border-2 border-gray-300'
-                }`}>
-                  <span className="font-semibold text-sm lg:text-base">{step.number}</span>
-                </div>
-                <span className={`ml-2 lg:ml-3 font-medium text-sm lg:text-base ${
-                  step.current ? 'text-blue-600' : 'text-gray-500'
-                }`}>
-                  {step.title}
-                </span>
-                {step.number < 4 && <div className="ml-4 lg:ml-8 w-6 lg:w-12 h-0.5 bg-gray-300"></div>}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile Progress Bar */}
-        <div className="sm:hidden bg-gray-50 rounded-lg p-3 mb-6">
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-600">Step 1 of 4</span>
-            <span className="text-blue-600 font-medium">Choose Account Type</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-            <div className="bg-blue-600 h-2 rounded-full w-1/4"></div>
-          </div>
-        </div>
-
-        {/* Header Section - Mobile Responsive */}
-        <div className="text-center mb-8 sm:mb-10 lg:mb-12 px-2 sm:px-0">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 leading-tight">
-            Are you a student, teacher or parent please choose
-          </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Before we begin, please choose the account you want to open.
-          </p>
-        </div>
-
-        {/* Role Selection Cards - Mobile Responsive */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 px-2 sm:px-0">
-          {/* Student Card */}
-          <div 
-            className={`bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
-              selectedRole === 'student' ? 'border-blue-500 bg-blue-50 shadow-blue-100' : 'border-gray-200 hover:border-blue-400 hover:bg-blue-50'
-            }`}
-            onClick={() => setSelectedRole('student')}
-          >
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4">Student</h3>
-            <ul className="space-y-2 sm:space-y-3 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Students can register</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Students can ask teachers for tutor</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Students can join class</span>
-              </li>
-            </ul>
-            
-            {/* Mobile selection indicator */}
-            {selectedRole === 'student' && (
-              <div className="mt-4 p-2 bg-blue-100 rounded-lg text-center">
-                <span className="text-blue-700 text-sm font-medium">✓ Selected</span>
-              </div>
-            )}
-          </div>
-
-          {/* Parent Card */}
-          <div 
-            className={`bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
-              selectedRole === 'parent' ? 'border-blue-500 bg-blue-50 shadow-blue-100' : 'border-gray-200 hover:border-blue-400 hover:bg-blue-50'
-            }`}
-            onClick={() => setSelectedRole('parent')}
-          >
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4">Parent</h3>
-            <ul className="space-y-2 sm:space-y-3 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Register your child</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Find qualified tutors</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Track progress</span>
-              </li>
-            </ul>
-            
-            {/* Mobile selection indicator */}
-            {selectedRole === 'parent' && (
-              <div className="mt-4 p-2 bg-blue-100 rounded-lg text-center">
-                <span className="text-blue-700 text-sm font-medium">✓ Selected</span>
-              </div>
-            )}
-          </div>
-
-          {/* Teacher Card */}
-          <div 
-            className={`bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
-              selectedRole === 'teacher' ? 'border-blue-500 bg-blue-50 shadow-blue-100' : 'border-gray-200 hover:border-blue-400 hover:bg-blue-50'
-            }`}
-            onClick={() => setSelectedRole('teacher')}
-          >
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4">Teacher</h3>
-            <ul className="space-y-2 sm:space-y-3 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Teach students online</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Set your own rates</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-sm sm:text-base">Flexible schedule</span>
-              </li>
-            </ul>
-            
-            {/* Mobile selection indicator */}
-            {selectedRole === 'teacher' && (
-              <div className="mt-4 p-2 bg-blue-100 rounded-lg text-center">
-                <span className="text-blue-700 text-sm font-medium">✓ Selected</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Mobile Selection Hint */}
-        <div className="sm:hidden text-center mb-4 px-4">
-          <p className="text-sm text-gray-500 bg-blue-50 rounded-lg p-3">
-            👆 Tap on a card to select your role
-          </p>
-        </div>
-
-        {/* Continue Button - Mobile Responsive */}
-        <div className="text-center px-2 sm:px-0">
-          <button 
-            onClick={() => setCurrentStep('form')}
-            className={`font-semibold py-3 sm:py-4 px-8 sm:px-12 rounded-lg sm:rounded-xl text-base sm:text-lg transition-all duration-300 shadow-lg w-full sm:w-auto ${
-              selectedRole 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 active:scale-95' 
-                : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-            }`}
-            disabled={!selectedRole}
-          >
-            Continue
-          </button>
-          
-          {/* Mobile helper text */}
-          {!selectedRole && (
-            <p className="sm:hidden text-sm text-gray-500 mt-3">
-              Please select a role above to continue
-            </p>
-          )}
-        </div>
-
-        {/* Desktop helper text */}
+        {/* Helper Text when no role is selected */}
         {!selectedRole && (
-          <div className="hidden sm:block text-center mt-4">
-            <p className="text-sm text-gray-500">
-              Click on a card to select your role and continue
-            </p>
+          <div className="text-center mt-8">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 max-w-md mx-auto">
+              <div className="text-yellow-600 text-lg font-semibold mb-2">Select Your Role</div>
+              <p className="text-yellow-700">
+                Please choose your role above to continue with the login process
+              </p>
+            </div>
           </div>
         )}
       </div>

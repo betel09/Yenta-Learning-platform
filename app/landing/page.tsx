@@ -9,6 +9,10 @@ export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSignUp = () => {
+    router.push('/Registor');
+  };
+
+  const handleSignIn = () => {
     router.push('/login');
   };
 
@@ -46,13 +50,19 @@ export default function LandingPage() {
 
             {/* Desktop Sign Up Button */}
             <div className="hidden md:flex items-center">
+                <button onClick={handleSignIn} className="border border-blue-600 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 font-medium transition-colors">
+                Sign In
+              </button>
               <button onClick={handleSignUp} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium transition-colors">
                 Sign Up
               </button>
             </div>
-
+ 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-4">
+                  <button onClick={handleSignIn} className="border border-blue-600 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-50 font-medium text-sm transition-colors">
+                Sign In
+              </button>
               <button onClick={handleSignUp} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium text-sm transition-colors">
                 Sign Up
               </button>
